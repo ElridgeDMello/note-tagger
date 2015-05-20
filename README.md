@@ -14,3 +14,10 @@ Run `grunt` for building and `grunt serve` for preview.
 ## Testing
 
 Running `grunt test` will run the unit tests with karma.
+
+### To run tests whenever files change, do:
+  `grunt serve` in one terminal window
+  
+  `karma start` in another terminal window
+  
+The tests will automatically be re-run when one of the test specs change
