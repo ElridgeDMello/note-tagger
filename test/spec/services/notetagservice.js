@@ -31,17 +31,46 @@ describe('Service: noteTagService', function () {
       expect(noteTagService.getAssociatedNotes(testTag)[0]).toEqual(noteId);
     });
 
-    it('adds notes to the tag', function() {});
+    it('adds multiple notes to a tag', function() {
+      var tagBreakfast = 'breakfast',
+        noteQuinoa = 'blueberry_quinoa',
+        noteOmelet = 'colorado_omelette',
+        actual;
+
+      // when
+      noteTagService.addTag(noteOmelet, tagBreakfast);
+      noteTagService.addTag(noteQuinoa, tagBreakfast);
+
+      // then
+      actual = noteTagService.getAssociatedNotes(tagBreakfast);
+      expect(actual).toBeArrayOfSize(2);
+      expect(actual).toContain(noteOmelet);
+      expect(actual).toContain(noteQuinoa);
+    });
   });
 
   describe('the addTags method', function() {
+
+    beforeEach(function() {
+      spyOn(noteTagService, 'addTag').and.callThrough();
+    });
 
     it('is defined', function() {
       expect(noteTagService.addTags).toBeFunction();
     });
 
     it('delegates to addTag method', function() {
+      var noteId = 'breakfast quinoa',
+        tags = ['sweet', 'healthy'];
 
+      // when
+      noteTagService.addTags(noteId, tags);
+
+      // then
+      tags.forEach(function(tag) {
+        expect(noteTagService.addTag)
+          .toHaveBeenCalledWith(noteId, tag);
+      });
     });
   });
 
