@@ -79,12 +79,34 @@ describe('Service: noteTagService', function () {
     it('is defined', function() {
       expect(noteTagService.getActiveNotes).toBeFunction();
     });
+
+    it('newly added tags default to active', function() {
+      noteTagService.addTag('note1', 'tag1');
+      noteTagService.addTag('note2', 'tag2');
+
+      // when
+      expect(noteTagService.getActiveNotes()).toBeArrayOfSize(2);
+      expect(noteTagService.getActiveNotes()).toContain('note1');
+      expect(noteTagService.getActiveNotes()).toContain('note2');
+    });
   });
 
   describe('the activateTags method', function() {
 
     it('is defined', function() {
       expect(noteTagService.activateTags).toBeFunction();
+    });
+
+    it('is reflected by the notes associated with activated tag', function() {
+      // given
+      noteTagService.addTag('apple_with_pb', 'snack');
+      noteTagService.addTag('chicken_marsala', 'dinner');
+
+      // when
+      noteTagService.activateTags(['snack']);
+
+      // then
+      expect(noteTagService.getActiveNotes()).toEqual(['apple_with_pb']);
     });
 
   });

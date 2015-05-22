@@ -22,6 +22,7 @@ angular.module('noteTaggerApp')
       } else {
         noteTagMap[tag].notes = noteTagMap[tag].notes.concat(noteId);
       }
+      noteTagMap[tag].active = true;
     };
 
     this.addTags = function(noteId, tags) {
@@ -38,11 +39,35 @@ angular.module('noteTaggerApp')
     };
 
     this.getActiveNotes = function() {
-
+      var activeNotes = [];
+      keys(noteTagMap).forEach(function(tag) {
+        if (noteTagMap[tag].active) {
+          activeNotes = activeNotes.concat(noteTagMap[tag].notes);
+        }
+      });
+      return activeNotes;
     };
 
-    this.activateTags = function(/*tags*/) {
-
+    this.activateTags = function(tags) {
+      keys(noteTagMap).forEach(function(tag) {
+        if (!contains(tags, tag)) {
+          noteTagMap[tag].active = false;
+        }
+      });
     };
+
+    function contains(array, value) {
+      return array.indexOf(value) !== -1;
+    }
+
+    function keys(object) {
+      var arrayOfKeys = [], key;
+      for(key in object) {
+        if (object.hasOwnProperty(key)) {
+          arrayOfKeys.push(key);
+        }
+      }
+      return arrayOfKeys;
+    }
 
   });
