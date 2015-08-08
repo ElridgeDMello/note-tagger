@@ -111,4 +111,22 @@ describe('Service: noteTagService', function () {
 
     });
 
+    describe('the activateAllTags method', function() {
+
+        it('activates all notes', function() {
+            // given
+            noteTagService.addTag('apple_with_pb', 'snack');
+            noteTagService.addTag('chicken_marsala', 'dinner');
+            noteTagService.activateTags(['snack']); // only one is activated here
+
+            // when
+            noteTagService.activateAlltags();
+
+            // then
+            expect(noteTagService.getActiveNotes()).toBeArrayOfStrings();
+            expect(noteTagService.getActiveNotes()).toBeArrayOfSize(2);
+        });
+
+    });
+
 });

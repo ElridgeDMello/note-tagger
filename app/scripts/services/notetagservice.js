@@ -56,6 +56,12 @@ angular.module('noteTaggerApp')
             });
         };
 
+        this.activateAlltags = function() {
+            keys(noteTagMap).forEach(function(tag) {
+                noteTagMap[tag].active = true;
+            });
+        };
+
         function contains(array, value) {
             return array.indexOf(value) !== -1;
         }
